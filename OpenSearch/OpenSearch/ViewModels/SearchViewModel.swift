@@ -76,6 +76,9 @@ final class SearchViewModel {
     private(set) var threadError: String? = nil
     var threadAnchorId: Int? = nil
 
+    // API key state — controls whether LLM-powered tabs are available
+    var hasApiKey: Bool = false
+
     private let service = SearchService()
 
     init() {
@@ -84,6 +87,17 @@ final class SearchViewModel {
         Task {
             await loadContacts()
             await loadGroups()
+            await checkApiKeyStatus()
+        }
+    }
+
+    @MainActor
+    func checkApiKeyStatus() async {
+        do {
+            let settings = try await service.fetchSettings()
+            hasApiKey = (settings.anthropicApiKey != nil || settings.openaiApiKey != nil)
+        } catch {
+            hasApiKey = false
         }
     }
 

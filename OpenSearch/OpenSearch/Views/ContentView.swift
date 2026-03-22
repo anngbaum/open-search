@@ -18,12 +18,20 @@ enum AppTab: String, CaseIterable, Identifiable {
 
 struct ContentView: View {
     @State private var viewModel = SearchViewModel()
-    @State private var selectedTab: AppTab = .actions
+    @State private var selectedTab: AppTab = .search
     @State private var showSettings: Bool = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
-            if viewModel.threadAnchorId != nil {
+            if !hasCompletedOnboarding {
+                OnboardingView(viewModel: viewModel) {
+                    hasCompletedOnboarding = true
+                    if viewModel.hasApiKey {
+                        selectedTab = .actions
+                    }
+                }
+            } else if viewModel.threadAnchorId != nil {
                 ThreadView(viewModel: viewModel)
             } else {
                 // Top bar: tabs on the left, sync + settings on the right
@@ -45,9 +53,17 @@ struct ContentView: View {
                 // Content for selected tab
                 switch selectedTab {
                 case .conversations:
-                    ChatMetadataPanelView(viewModel: viewModel)
+                    if viewModel.hasApiKey {
+                        ChatMetadataPanelView(viewModel: viewModel)
+                    } else {
+                        apiKeyRequiredView
+                    }
                 case .actions:
-                    ActionsPanelView(viewModel: viewModel)
+                    if viewModel.hasApiKey {
+                        ActionsPanelView(viewModel: viewModel)
+                    } else {
+                        apiKeyRequiredView
+                    }
                 case .search:
                     SearchBarView(viewModel: viewModel)
                         .padding(.horizontal)
@@ -60,11 +76,42 @@ struct ContentView: View {
         .sheet(isPresented: $showSettings) {
             SettingsView(viewModel: viewModel)
         }
+        .onChange(of: viewModel.hasApiKey) {
+            // If key was just added and we're on a disabled tab placeholder, stay there
+            // If key was removed and we're on an LLM tab, switch to search
+            if !viewModel.hasApiKey && selectedTab != .search {
+                selectedTab = .search
+            }
+        }
         .frame(minWidth: 600, minHeight: 400)
     }
 
+    private var apiKeyRequiredView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "key")
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
+            Text("API Key Required")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+            Text("Add an Anthropic or OpenAI API key in Settings to enable conversation summaries and action items.")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 60)
+            Button("Open Settings") {
+                showSettings = true
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
     private func tabButton(_ tab: AppTab) -> some View {
-        Button {
+        let requiresKey = (tab == .actions || tab == .conversations)
+        let disabled = requiresKey && !viewModel.hasApiKey
+
+        return Button {
             withAnimation(.easeInOut(duration: 0.15)) {
                 selectedTab = tab
             }
@@ -86,11 +133,12 @@ struct ContentView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(selectedTab == tab ? Color.accentColor.opacity(0.15) : Color.clear)
-            .foregroundStyle(selectedTab == tab ? Color.accentColor : .secondary)
+            .foregroundColor(disabled ? .gray : (selectedTab == tab ? .accentColor : .secondary))
             .clipShape(RoundedRectangle(cornerRadius: 6))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .disabled(disabled)
     }
 
     private func badgeView(count: Int, color: Color) -> some View {
@@ -131,6 +179,113 @@ struct ContentView: View {
         }
         .buttonStyle(.plain)
         .help("Settings")
+    }
+}
+
+// MARK: - Onboarding
+
+struct OnboardingView: View {
+    @Bindable var viewModel: SearchViewModel
+    let onComplete: () -> Void
+
+    @State private var anthropicKeyInput: String = ""
+    @State private var openaiKeyInput: String = ""
+    @State private var isSaving: Bool = false
+    @State private var errorMessage: String? = nil
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            Image(systemName: "magnifyingglass.circle.fill")
+                .font(.system(size: 64))
+                .foregroundStyle(Color.accentColor)
+
+            Text("Welcome to OpenSearch")
+                .font(.title)
+                .fontWeight(.semibold)
+
+            Text("Search your iMessage history with full-text and semantic search.")
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Add an API key (optional)")
+                    .font(.headline)
+
+                Text("An Anthropic or OpenAI key enables conversation summaries and action item tracking. You can skip this and add one later in Settings.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Anthropic API Key")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    SecureField("sk-ant-...", text: $anthropicKeyInput)
+                        .textFieldStyle(.roundedBorder)
+                }
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("OpenAI API Key")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    SecureField("sk-...", text: $openaiKeyInput)
+                        .textFieldStyle(.roundedBorder)
+                }
+
+                if let error = errorMessage {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
+            }
+            .frame(width: 340)
+
+            HStack(spacing: 16) {
+                Button("Skip") {
+                    onComplete()
+                }
+                .buttonStyle(.bordered)
+
+                Button("Get Started") {
+                    Task { await saveAndContinue() }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(isSaving)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func saveAndContinue() async {
+        isSaving = true
+        errorMessage = nil
+
+        var updates: [String: String] = [:]
+        if !anthropicKeyInput.isEmpty {
+            updates["anthropicApiKey"] = anthropicKeyInput
+        }
+        if !openaiKeyInput.isEmpty {
+            updates["openaiApiKey"] = openaiKeyInput
+        }
+
+        if !updates.isEmpty {
+            do {
+                try await viewModel.updateSettings(updates)
+                viewModel.hasApiKey = true
+            } catch {
+                errorMessage = "Failed to save API key. Make sure the server is running."
+                isSaving = false
+                return
+            }
+        }
+
+        isSaving = false
+        onComplete()
     }
 }
 

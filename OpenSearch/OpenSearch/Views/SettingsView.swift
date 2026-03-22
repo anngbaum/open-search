@@ -33,7 +33,10 @@ struct SettingsView: View {
                         placeholder: "sk-ant-...",
                         input: $anthropicKeyInput,
                         maskedKey: maskedAnthropicKey,
-                        helpText: "console.anthropic.com"
+                        helpText: "console.anthropic.com",
+                        onRemove: {
+                            Task { await removeKey(provider: "anthropic") }
+                        }
                     )
 
                     apiKeySection(
@@ -41,7 +44,10 @@ struct SettingsView: View {
                         placeholder: "sk-...",
                         input: $openaiKeyInput,
                         maskedKey: maskedOpenaiKey,
-                        helpText: "platform.openai.com"
+                        helpText: "platform.openai.com",
+                        onRemove: {
+                            Task { await removeKey(provider: "openai") }
+                        }
                     )
 
                     Divider()
@@ -72,7 +78,7 @@ struct SettingsView: View {
             }
         }
         .padding(20)
-        .frame(width: 460, height: 380)
+        .frame(width: 460, height: 400)
         .task { await loadSettings() }
     }
 
@@ -81,7 +87,8 @@ struct SettingsView: View {
         placeholder: String,
         input: Binding<String>,
         maskedKey: String?,
-        helpText: String
+        helpText: String,
+        onRemove: @escaping () -> Void
     ) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
@@ -91,15 +98,26 @@ struct SettingsView: View {
             SecureField(placeholder, text: input)
                 .textFieldStyle(.roundedBorder)
 
-            if let masked = maskedKey, input.wrappedValue.isEmpty {
-                Text("Current: \(masked)")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            HStack {
+                if let masked = maskedKey, input.wrappedValue.isEmpty {
+                    Text("Current: \(masked)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
 
-            Text(helpText)
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+                    Button("Remove") {
+                        onRemove()
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .buttonStyle(.plain)
+                }
+
+                Spacer()
+
+                Text(helpText)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
         }
     }
 
@@ -141,6 +159,29 @@ struct SettingsView: View {
         isLoading = false
     }
 
+    private func removeKey(provider: String) async {
+        let key = provider == "anthropic" ? "anthropicApiKey" : "openaiApiKey"
+        do {
+            try await viewModel.updateSettings([key: ""])
+            if provider == "anthropic" {
+                maskedAnthropicKey = nil
+            } else {
+                maskedOpenaiKey = nil
+            }
+            // Refresh models availability
+            if let fetchedModels = try? await viewModel.fetchModels() {
+                models = fetchedModels
+                if !availableModels.contains(where: { $0.id == selectedModel }) {
+                    selectedModel = availableModels.first?.id ?? ""
+                }
+            }
+            viewModel.hasApiKey = (maskedAnthropicKey != nil || maskedOpenaiKey != nil)
+            statusMessage = "\(provider == "anthropic" ? "Anthropic" : "OpenAI") key removed"
+        } catch {
+            statusMessage = "Error removing key"
+        }
+    }
+
     private func save() async {
         isSaving = true
         statusMessage = nil
@@ -179,12 +220,12 @@ struct SettingsView: View {
             // Refresh models availability
             if let fetchedModels = try? await viewModel.fetchModels() {
                 models = fetchedModels
-                // If current selection is no longer available, pick first available
                 if !availableModels.contains(where: { $0.id == selectedModel }) {
                     selectedModel = availableModels.first?.id ?? ""
                 }
             }
 
+            viewModel.hasApiKey = (maskedAnthropicKey != nil || maskedOpenaiKey != nil)
             statusMessage = "Saved"
         } catch {
             statusMessage = "Error saving settings"

@@ -80,11 +80,7 @@ function saveSettings(settings: AppSettings): void {
 let settings = loadSettings();
 
 function corsHeaders(): Record<string, string> {
-  return {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+  return {};
 }
 
 function jsonResponse(
@@ -427,13 +423,6 @@ async function handlePutSettings(
 }
 
 const server = http.createServer(async (req, res) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204, corsHeaders());
-    res.end();
-    return;
-  }
-
   if (req.method !== 'GET' && req.method !== 'POST' && req.method !== 'PUT') {
     errorResponse(res, 'Method not allowed', 405);
     return;
