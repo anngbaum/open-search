@@ -1,0 +1,194 @@
+import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
+
+export interface ParsedQuery {
+  query: string;
+  from?: string;
+  groupChatName?: string;
+  after?: string;
+  before?: string;
+  fromMe?: boolean;
+  toMe?: boolean;
+  mode?: 'text' | 'semantic' | 'hybrid';
+}
+
+export interface LLMConfig {
+  model: string;
+  anthropicApiKey?: string;
+  openaiApiKey?: string;
+}
+
+export interface ModelOption {
+  id: string;
+  name: string;
+  provider: 'anthropic' | 'openai';
+}
+
+export const AVAILABLE_MODELS: ModelOption[] = [
+  { id: 'claude-haiku-4-5-20251001', name: 'Claude Haiku 4.5', provider: 'anthropic' },
+  { id: 'claude-sonnet-4-5-20250514', name: 'Claude Sonnet 4.5', provider: 'anthropic' },
+  { id: 'gpt-4.1-nano', name: 'GPT-4.1 Nano', provider: 'openai' },
+  { id: 'gpt-4.1-mini', name: 'GPT-4.1 Mini', provider: 'openai' },
+  { id: 'gpt-4o-mini', name: 'GPT-4o Mini', provider: 'openai' },
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai' },
+];
+
+let anthropicClient: Anthropic | null = null;
+let anthropicClientKey: string | undefined = undefined;
+let openaiClient: OpenAI | null = null;
+let openaiClientKey: string | undefined = undefined;
+
+function getAnthropicClient(apiKey?: string): Anthropic {
+  const key = apiKey || undefined;
+  if (!anthropicClient || key !== anthropicClientKey) {
+    anthropicClientKey = key;
+    anthropicClient = new Anthropic(key ? { apiKey: key } : undefined);
+  }
+  return anthropicClient;
+}
+
+function getOpenAIClient(apiKey?: string): OpenAI {
+  const key = apiKey || undefined;
+  if (!openaiClient || key !== openaiClientKey) {
+    openaiClientKey = key;
+    openaiClient = new OpenAI(key ? { apiKey: key } : undefined);
+  }
+  return openaiClient;
+}
+
+function buildSystemPrompt(): string {
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'long' });
+
+  return `You are a query parser for an iMessage search engine. Today is ${dayOfWeek}, ${today}.
+
+Given a natural language query about searching text messages, extract structured search parameters as JSON.
+
+CRITICAL RULES:
+- "query" = ONLY the topic/content keywords. Strip out sender names, dates, and filler words like "texts", "messages", "from", "about".
+- "from" = person's name ONLY if "from <name>" or "by <name>" appears. "from margaret" → from: "margaret". Do NOT set fromMe.
+- "groupChatName" = group chat name ONLY if the user explicitly says "in the <name> chat" or "in the <name> group". NEVER put search keywords in "groupChatName". NEVER set "groupChatName" unless the word "chat", "group", or "conversation" appears in the input.
+- "after"/"before" = ONLY if the user mentions a specific time (yesterday, last week, last month, a date). Do NOT add dates if no time is mentioned.
+- "fromMe" = true ONLY if the user says "I sent", "my messages", "messages I wrote", etc.
+- "toMe" = true ONLY if the user says "sent to me", "I received", etc.
+- "mode" = search mode. Only set if the user explicitly requests a mode. Options: "text", "semantic", "hybrid".
+- OMIT any field that is not explicitly mentioned. When in doubt, leave it out.
+
+Date conversions (only when explicitly mentioned):
+- "yesterday" → after: day before ${today}, before: day before ${today}
+- "last week" / "past week" / "this week" → after: 7 days before ${today}, before: ${today}
+- "last month" / "past month" → after: first day of previous month, before: last day of previous month
+- "past few days" / "past couple days" → after: 3-4 days before ${today}, before: ${today}
+- "recently" / "lately" → after: 14 days before ${today}, before: ${today}
+- "this morning" → after: ${today}
+
+Examples:
+- "texts from margaret about school buses" → {"query": "school buses", "from": "margaret"}
+- "what did sarah say about the party" → {"query": "party", "from": "sarah"}
+- "messages about dinner last week" → {"query": "dinner", "after": "<7 days ago>", "before": "${today}"}
+- "texts from the past week about pizza" → {"query": "pizza", "after": "<7 days ago>", "before": "${today}"}
+- "find pizza" → {"query": "pizza"}
+- "texts I sent to mike about football" → {"query": "football", "fromMe": true}
+- "messages about hiking in colorado" → {"query": "hiking in colorado"} (NOT groupChatName: "colorado")
+- "in the family chat about vacation" → {"query": "vacation", "groupChatName": "family"}
+
+Respond with ONLY valid JSON. No markdown, no explanation.`;
+}
+
+export function getModelProvider(modelId: string): 'anthropic' | 'openai' {
+  const model = AVAILABLE_MODELS.find((m) => m.id === modelId);
+  return model?.provider ?? (modelId.startsWith('gpt') ? 'openai' : 'anthropic');
+}
+
+async function callAnthropic(input: string, model: string, apiKey?: string): Promise<string> {
+  const client = getAnthropicClient(apiKey);
+  const response = await client.messages.create({
+    model,
+    max_tokens: 256,
+    system: buildSystemPrompt(),
+    messages: [{ role: 'user', content: input }],
+  });
+  return response.content[0].type === 'text' ? response.content[0].text : '';
+}
+
+async function callOpenAI(input: string, model: string, apiKey?: string): Promise<string> {
+  const client = getOpenAIClient(apiKey);
+  const response = await client.chat.completions.create({
+    model,
+    max_tokens: 256,
+    messages: [
+      { role: 'system', content: buildSystemPrompt() },
+      { role: 'user', content: input },
+    ],
+  });
+  return response.choices[0]?.message?.content ?? '';
+}
+
+/**
+ * Call the appropriate LLM provider based on model selection.
+ * Shared by query parsing, metadata, and action extraction.
+ */
+export async function callLLM(
+  config: LLMConfig,
+  system: string,
+  userMessage: string,
+  maxTokens: number = 512
+): Promise<string> {
+  const model = config.model ?? 'claude-haiku-4-5-20251001';
+  const provider = getModelProvider(model);
+
+  if (provider === 'openai') {
+    const client = getOpenAIClient(config.openaiApiKey);
+    const response = await client.chat.completions.create({
+      model,
+      max_tokens: maxTokens,
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: userMessage },
+      ],
+    });
+    return response.choices[0]?.message?.content ?? '';
+  } else {
+    const client = getAnthropicClient(config.anthropicApiKey);
+    const response = await client.messages.create({
+      model,
+      max_tokens: maxTokens,
+      system,
+      messages: [{ role: 'user', content: userMessage }],
+    });
+    return response.content[0].type === 'text' ? response.content[0].text : '';
+  }
+}
+
+export async function parseNaturalQuery(input: string, config?: LLMConfig): Promise<ParsedQuery> {
+  const model = config?.model ?? 'claude-haiku-4-5-20251001';
+
+  try {
+    const provider = getModelProvider(model);
+    let text: string;
+
+    if (provider === 'openai') {
+      text = await callOpenAI(input, model, config?.openaiApiKey);
+    } else {
+      text = await callAnthropic(input, model, config?.anthropicApiKey);
+    }
+
+    // Strip any markdown fencing the model might add
+    const jsonStr = text.replace(/```json?\n?/g, '').replace(/```/g, '').trim();
+    let parsed = JSON.parse(jsonStr) as ParsedQuery;
+
+    if (!parsed.query || typeof parsed.query !== 'string') {
+      return { query: input };
+    }
+
+    return parsed;
+  } catch (err) {
+    console.error('Query parsing failed, falling back to literal search:', (err as Error).message);
+    return { query: input };
+  }
+}
+
+export async function disposeQueryParser(): Promise<void> {
+  // No-op — API clients are stateless, nothing to dispose
+}

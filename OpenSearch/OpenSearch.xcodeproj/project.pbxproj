@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E766BA42F63688000A531F1 /* ActionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766BA32F63688000A531F1 /* ActionItem.swift */; };
+		3E766BA62F63688E00A531F1 /* ActionsPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766BA52F63688E00A531F1 /* ActionsPanelView.swift */; };
+		3E766BA82F636A0000A531F1 /* ChatMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766BA72F636A0000A531F1 /* ChatMetadata.swift */; };
+		3E766BAA2F636A0E00A531F1 /* ChatMetadataPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E766BA92F636A0E00A531F1 /* ChatMetadataPanelView.swift */; };
+		3EE72FDD2F70449B005A7A64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EE72FDC2F70449B005A7A64 /* Assets.xcassets */; };
+		A10001 /* OpenSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001 /* OpenSearchApp.swift */; };
+		A10002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10002 /* ContentView.swift */; };
+		A10003 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10003 /* SearchResult.swift */; };
+		A10004 /* ContextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10004 /* ContextMessage.swift */; };
+		A10005 /* SearchMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10005 /* SearchMode.swift */; };
+		A10006 /* SearchFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10006 /* SearchFilters.swift */; };
+		A10007 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10007 /* SearchService.swift */; };
+		A10008 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10008 /* SearchViewModel.swift */; };
+		A10009 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10009 /* SearchBarView.swift */; };
+		A10011 /* ResultsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10011 /* ResultsListView.swift */; };
+		A10012 /* ResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10012 /* ResultRowView.swift */; };
+		A10013 /* ContextMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10013 /* ContextMessagesView.swift */; };
+		A10014 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10014 /* Date+Formatting.swift */; };
+		A10015 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10016 /* Contact.swift */; };
+		A10017 /* ThreadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10017 /* ThreadResponse.swift */; };
+		A10018 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10018 /* ThreadView.swift */; };
+		A10019 /* GroupChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10019 /* GroupChat.swift */; };
+		A10021 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10021 /* SettingsView.swift */; };
+		A10022 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10022 /* ServerManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3E766BA32F63688000A531F1 /* ActionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionItem.swift; sourceTree = "<group>"; };
+		3E766BA52F63688E00A531F1 /* ActionsPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsPanelView.swift; sourceTree = "<group>"; };
+		3E766BA72F636A0000A531F1 /* ChatMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMetadata.swift; sourceTree = "<group>"; };
+		3E766BA92F636A0E00A531F1 /* ChatMetadataPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMetadataPanelView.swift; sourceTree = "<group>"; };
+		3EE72FDC2F70449B005A7A64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10001 /* OpenSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSearchApp.swift; sourceTree = "<group>"; };
+		B10002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B10003 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		B10004 /* ContextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMessage.swift; sourceTree = "<group>"; };
+		B10005 /* SearchMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMode.swift; sourceTree = "<group>"; };
+		B10006 /* SearchFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilters.swift; sourceTree = "<group>"; };
+		B10007 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		B10008 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		B10009 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		B10011 /* ResultsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsListView.swift; sourceTree = "<group>"; };
+		B10012 /* ResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRowView.swift; sourceTree = "<group>"; };
+		B10013 /* ContextMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMessagesView.swift; sourceTree = "<group>"; };
+		B10014 /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		B10015 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B10016 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		B10017 /* ThreadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadResponse.swift; sourceTree = "<group>"; };
+		B10018 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
+		B10019 /* GroupChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChat.swift; sourceTree = "<group>"; };
+		B10021 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B10022 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		C10001 /* OpenSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D10001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E10001 = {
+			isa = PBXGroup;
+			children = (
+				E10002 /* OpenSearch */,
+				E10009 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E10002 /* OpenSearch */ = {
+			isa = PBXGroup;
+			children = (
+				B10001 /* OpenSearchApp.swift */,
+				3EE72FDC2F70449B005A7A64 /* Assets.xcassets */,
+				B10015 /* Info.plist */,
+				E10003 /* Models */,
+				E10004 /* Services */,
+				E10005 /* ViewModels */,
+				E10006 /* Views */,
+				E10008 /* Extensions */,
+			);
+			path = OpenSearch;
+			sourceTree = "<group>";
+		};
+		E10003 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3E766BA32F63688000A531F1 /* ActionItem.swift */,
+				3E766BA72F636A0000A531F1 /* ChatMetadata.swift */,
+				B10003 /* SearchResult.swift */,
+				B10004 /* ContextMessage.swift */,
+				B10005 /* SearchMode.swift */,
+				B10006 /* SearchFilters.swift */,
+				B10016 /* Contact.swift */,
+				B10017 /* ThreadResponse.swift */,
+				B10019 /* GroupChat.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E10004 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B10007 /* SearchService.swift */,
+				B10022 /* ServerManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E10005 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B10008 /* SearchViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E10006 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E766BA52F63688E00A531F1 /* ActionsPanelView.swift */,
+				3E766BA92F636A0E00A531F1 /* ChatMetadataPanelView.swift */,
+				B10002 /* ContentView.swift */,
+				B10009 /* SearchBarView.swift */,
+				B10011 /* ResultsListView.swift */,
+				B10012 /* ResultRowView.swift */,
+				B10013 /* ContextMessagesView.swift */,
+				B10018 /* ThreadView.swift */,
+				B10021 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E10008 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B10014 /* Date+Formatting.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E10009 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C10001 /* OpenSearch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F10001 /* OpenSearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = G10003 /* Build configuration list for PBXNativeTarget "OpenSearch" */;
+			buildPhases = (
+				F10004 /* Bundle Server */,
+				F10002 /* Sources */,
+				D10001 /* Frameworks */,
+				F10003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenSearch;
+			productName = OpenSearch;
+			productReference = C10001 /* OpenSearch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		H10001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F10001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = G10001 /* Build configuration list for PBXProject "OpenSearch" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E10001;
+			productRefGroup = E10009 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F10001 /* OpenSearch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F10003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EE72FDD2F70449B005A7A64 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F10004 /* Bundle Server */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle Server";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Bundle the Node.js server into the app\nSERVER_SRC=\"${PROJECT_DIR}/../build/server\"\nSERVER_DEST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/server\"\n\nif [ ! -d \"$SERVER_SRC\" ]; then\n    echo \"error: Server bundle not found at $SERVER_SRC. Run 'npm run bundle' first.\"\n    exit 1\nfi\n\necho \"Copying server bundle to app resources...\"\nrsync -a --delete \"$SERVER_SRC/\" \"$SERVER_DEST/\"\n\n# Re-sign the node binary\nif [ -n \"${CODE_SIGN_IDENTITY}\" ] && [ \"${CODE_SIGN_IDENTITY}\" != \"-\" ]; then\n    codesign --force --sign \"${CODE_SIGN_IDENTITY}\" \"$SERVER_DEST/node\"\nelse\n    codesign --force --sign - \"$SERVER_DEST/node\"\nfi\n\necho \"Server bundle copied ($(du -sh \"$SERVER_DEST\" | cut -f1))\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F10002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001 /* OpenSearchApp.swift in Sources */,
+				3E766BA42F63688000A531F1 /* ActionItem.swift in Sources */,
+				A10002 /* ContentView.swift in Sources */,
+				A10003 /* SearchResult.swift in Sources */,
+				A10004 /* ContextMessage.swift in Sources */,
+				3E766BA62F63688E00A531F1 /* ActionsPanelView.swift in Sources */,
+				3E766BA82F636A0000A531F1 /* ChatMetadata.swift in Sources */,
+				3E766BAA2F636A0E00A531F1 /* ChatMetadataPanelView.swift in Sources */,
+				A10005 /* SearchMode.swift in Sources */,
+				A10006 /* SearchFilters.swift in Sources */,
+				A10007 /* SearchService.swift in Sources */,
+				A10008 /* SearchViewModel.swift in Sources */,
+				A10009 /* SearchBarView.swift in Sources */,
+				A10011 /* ResultsListView.swift in Sources */,
+				A10012 /* ResultRowView.swift in Sources */,
+				A10013 /* ContextMessagesView.swift in Sources */,
+				A10014 /* Date+Formatting.swift in Sources */,
+				A10015 /* Contact.swift in Sources */,
+				A10017 /* ThreadResponse.swift in Sources */,
+				A10018 /* ThreadView.swift in Sources */,
+				A10019 /* GroupChat.swift in Sources */,
+				A10021 /* SettingsView.swift in Sources */,
+				A10022 /* ServerManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		G10004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		G10005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		G10006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenSearch/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.opensearch.app;
+				PRODUCT_NAME = OpenSearch;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		G10007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenSearch/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.opensearch.app;
+				PRODUCT_NAME = OpenSearch;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		G10001 /* Build configuration list for PBXProject "OpenSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				G10004 /* Debug */,
+				G10005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		G10003 /* Build configuration list for PBXNativeTarget "OpenSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				G10006 /* Debug */,
+				G10007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = H10001 /* Project object */;
+}

@@ -1,0 +1,34 @@
+{
+  "name": "open-search",
+  "version": "1.0.0",
+  "description": "iMessage search engine with full-text and semantic search",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "copy-db": "tsx src/index.ts copy-db",
+    "ingest": "tsx src/index.ts ingest",
+    "embed": "tsx src/index.ts embed",
+    "search": "tsx src/index.ts search",
+    "status": "tsx src/index.ts status",
+    "serve": "lsof -ti :11488 | xargs kill 2>/dev/null; tsx src/server.ts",
+    "serve:reset": "lsof -ti :11488 | xargs kill 2>/dev/null; tsx src/server.ts --hard-reset",
+    "resync": "tsx src/index.ts resync",
+    "bundle": "bash scripts/bundle-server.sh",
+    "package": "bash scripts/package-app.sh"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@electric-sql/pglite": "^0.2.17",
+    "@huggingface/transformers": "^3.8.1",
+    "better-sqlite3": "^11.7.0",
+    "bplist-parser": "^0.3.2",
+    "commander": "^13.1.0",
+    "openai": "^6.27.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.12.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
