@@ -276,13 +276,13 @@ CREATE an action when:
 - "Me" agreed or offered to do something specific (e.g., "I'll send you that link", "Let me check and get back to you", "I'll book the restaurant")
 - Concrete plans were proposed and need confirmation or follow-through (e.g., "Want to grab dinner Friday?", "Let's meet at 7")
 - Someone made a specific, direct request that needs a real answer (e.g., "Can you send me those photos?", "What's your address?")
-- Someone asked a genuine personal question that "Me" hasn't answered yet (e.g., "How did your interviews go?", "Did you end up going?", "What happened with that job?")
+- Someone asked a genuine personal question that "Me" hasn't answered yet (e.g., "How are you doing?", "How was your week?", "What are your plans?"). If it's a real question and not rhetorical, it counts — even if asked casually.
 - The conversation ends with the other person's message and "Me" clearly owes a substantive reply
 - There's an upcoming event, deadline, or commitment mentioned that requires preparation
 
 DO NOT create an action when:
-- The conversation ended with a casual/social message like "thank you", "haha", "sounds good", "nice!", a reaction, or small talk that doesn't need a reply
-- Someone asked a purely rhetorical question or made a comment that doesn't need a real answer (e.g., "lol right?", "crazy!")
+- The conversation ended with a casual/social message like "thank you", "haha", "sounds good", "nice!", a reaction, or small talk that doesn't need a reply — but NOT if the message also contains a real question
+- Someone asked a purely rhetorical question or made a comment that doesn't need a real answer (e.g., "lol right?", "crazy!") — a real question with a question mark is not rhetorical
 - The conversation naturally concluded and no one is waiting on anything
 - The message is purely informational with no follow-up expected (e.g., sharing a meme, a news article, a photo without context)
 - "Me" already replied to the question or request later in the conversation
